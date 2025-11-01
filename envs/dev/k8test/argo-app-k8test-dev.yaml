@@ -11,10 +11,10 @@ spec:
     path: charts/k8test
     helm:
       parameters:
-      - name: image.tag
-        value: 5ceee9180a7b24326509d50e383598fece7c00e8
-      - name: image.repository
-        value: k8demoacr.azurecr.io/k8test
+        - name: image.tag
+          value: 8337b37cc23dc76a51f96a1b6347323aee955873
+        - name: image.repository
+          value: k8demoacr.azurecr.io/k8test
   destination:
     server: https://kubernetes.default.svc
     namespace: dev

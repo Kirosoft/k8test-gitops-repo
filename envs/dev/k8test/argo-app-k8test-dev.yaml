@@ -12,7 +12,7 @@ spec:
     helm:
       parameters:
         - name: image.tag
-          value: 8337b37cc23dc76a51f96a1b6347323aee955873
+          value: aa242909ddc9882eda95a3a30a8e08ade5333735
         - name: image.repository
           value: k8demoacr.azurecr.io/k8test
   destination:

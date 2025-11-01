@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-    name: k8test-dev
-    namespace: argocd
+  name: k8test-dev
+  namespace: argocd
 spec:
-    project: default
-    source:
-        repoURL: https://github.com/kirosoft/k8test-repo.git
-        targetRevision: HEAD
-        path: charts/k8test
-        helm:
-            parameters:
-            - name: image.tag
-              value: 5ceee9180a7b24326509d50e383598fece7c00e8
-            - name: image.repository
-              value: k8demoacr.azurecr.io/k8test
-    destination:
-        server: https://kubernetes.default.svc
-        namespace: dev
-    syncPolicy:
-        automated:
-            prune: true
-            selfHeal: true
-        syncOptions:
-            - CreateNamespace=true
+  project: default
+  source:
+    repoURL: https://github.com/kirosoft/k8test-repo.git
+    targetRevision: HEAD
+    path: charts/k8test
+    helm:
+      parameters:
+      - name: image.tag
+        value: 5ceee9180a7b24326509d50e383598fece7c00e8
+      - name: image.repository
+        value: k8demoacr.azurecr.io/k8test
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: dev
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

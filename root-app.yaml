@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: k8test-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/kirosoft/k8test-gitops-repo.git
+    targetRevision: HEAD
+    path: envs
+    directory:
+      recurse: true
+      include: "*/k8test/argo-app-*.yaml"
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

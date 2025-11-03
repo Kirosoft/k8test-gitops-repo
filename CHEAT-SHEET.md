@@ -3,45 +3,60 @@
 ## 🚀 Quick Start Commands
 
 ```bash
-# Start ArgoCD UI
+# ⚠️ ALWAYS CHECK CLUSTER CONTEXT FIRST
+kubectl config current-context  # Should show: idp-aks-cluster
+
+# Start ArgoCD UI (Production Cluster)
 kubectl port-forward svc/argocd-server -n argocd 8888:443
 # Access: https://localhost:8888 (admin/password from argocd-password.txt)
 
-# Start Application  
+# Start Application (Production Cluster)
 kubectl port-forward -n dev deployment/k8test-dev 3000:3000
 # Access: http://localhost:3000
 
-# Check Everything
+# Check Everything (Production Cluster)
 kubectl get applications -n argocd && kubectl get pods -n dev
 ```
 
 ## 🔍 Essential Checks
 
-| What | Command |
-|------|---------|
-| **App Status** | `kubectl get applications -n argocd` |
-| **Pod Status** | `kubectl get pods -n dev` |
-| **App Logs** | `kubectl logs -n dev deployment/k8test-dev -f` |
-| **ArgoCD Sync** | `kubectl describe application k8test-dev -n argocd` |
-| **Current Version** | `kubectl get deployment k8test-dev -n dev -o jsonpath='{.spec.template.spec.containers[0].image}'` |
+| What | Command | Lens GUI |
+|------|---------|----------|
+| **Current Cluster** | `kubectl config current-context` | Check cluster name in sidebar |
+| **App Status** | `kubectl get applications -n argocd` | Custom Resources → Applications |
+| **Pod Status** | `kubectl get pods -n dev` | Workloads → Pods (dev namespace) |
+| **App Logs** | `kubectl logs -n dev deployment/k8test-dev -f` | Click pod → Logs tab |
+| **ArgoCD Sync** | `kubectl describe application k8test-dev -n argocd` | Click application → Details |
+| **Current Version** | `kubectl get deployment k8test-dev -n dev -o jsonpath='{.spec.template.spec.containers[0].image}'` | Workloads → Deployments → k8test-dev |
 
 ## 🔧 Quick Fixes
 
 | Problem | Solution |
 |---------|----------|
+| **Wrong Cluster** | `kubectl config use-context idp-aks-cluster` |
 | **ArgoCD Not Syncing** | `kubectl patch app k8test-dev -n argocd -p '{"metadata":{"annotations":{"argocd.argoproj.io/refresh":"hard"}}}' --type merge` |
 | **Pod Not Starting** | `kubectl get events -n dev --sort-by='.metadata.creationTimestamp'` |
 | **Port Forward Failed** | `taskkill /f /im kubectl.exe` then retry |
 | **ArgoCD Stuck** | `kubectl rollout restart statefulset/argocd-application-controller -n argocd` |
 
+## 🌐 Cluster Management
+
+| Task | Command |
+|------|---------|
+| **Check Current Cluster** | `kubectl config current-context` |
+| **Switch to Production** | `kubectl config use-context idp-aks-cluster` |
+| **List All Contexts** | `kubectl config get-contexts` |
+| **Cluster Info** | `kubectl cluster-info` |
+
 ## 🌐 Access URLs
 
-| Service | Local URL | Command |
-|---------|-----------|---------|
-| **ArgoCD UI** | https://localhost:8888 | `kubectl port-forward svc/argocd-server -n argocd 8888:443` |
-| **K8 Test App** | http://localhost:3000 | `kubectl port-forward -n dev deployment/k8test-dev 3000:3000` |
-| **Health Check** | http://localhost:3000/health | (after port-forward) |
-| **API Info** | http://localhost:3000/api/info | (after port-forward) |
+| Service | Local URL | Command | Lens Alternative |
+|---------|-----------|---------|------------------|
+| **ArgoCD UI** | https://localhost:8888 | `kubectl port-forward svc/argocd-server -n argocd 8888:443` | Network → Services → argocd-server → Port Forward |
+| **K8 Test App** | http://localhost:3000 | `kubectl port-forward -n dev deployment/k8test-dev 3000:3000` | Network → Services → k8test-dev → Port Forward |
+| **Kubernetes Lens** | Native GUI | Install from https://k8slens.dev/ | Best for visual cluster management |
+| **Health Check** | http://localhost:3000/health | (after port-forward) | - |
+| **API Info** | http://localhost:3000/api/info | (after port-forward) | - |
 
 ## 📊 Status Colors
 

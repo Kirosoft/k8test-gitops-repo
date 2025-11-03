@@ -10,6 +10,7 @@ This folder contains the complete K8 Test application with CI/CD and GitOps setu
 ## 📋 Daily Operations  
 - **[CHEAT-SHEET.md](CHEAT-SHEET.md)** - ⭐ **Quick reference for daily commands**
 - **[OPERATIONS.md](OPERATIONS.md)** - Detailed operations manual with troubleshooting
+- **[LENS-GUIDE.md](LENS-GUIDE.md)** - Kubernetes Lens GUI setup and usage
 - **[health-check.bat](health-check.bat)** - Quick health check script
 
 ## 📁 Project Structure

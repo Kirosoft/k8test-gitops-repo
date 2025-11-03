@@ -175,6 +175,21 @@ kubectl get events -n argocd --sort-by='.metadata.creationTimestamp'
 
 ## 🔧 Troubleshooting
 
+### Cluster Context Issues
+```bash
+# Check current cluster context
+kubectl config current-context
+
+# List all available contexts
+kubectl config get-contexts
+
+# Switch to correct cluster (if needed)
+kubectl config use-context idp-aks-cluster
+
+# Verify you're in the right cluster
+kubectl cluster-info
+```
+
 ### Application Not Starting
 ```bash
 # 1. Check pod status

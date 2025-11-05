@@ -1,0 +1,38 @@
+apiVersion: agent.k8s.elastic.co/v1alpha1
+kind: Agent
+metadata:
+  name: fleet-server
+  namespace: observability
+  labels:
+    app.kubernetes.io/component: fleet-server
+    app.kubernetes.io/managed-by: argocd
+spec:
+  version: 8.14.0
+  mode: fleet
+  fleetServerEnabled: true
+  policyID: fleet-server-policy
+  kibanaRef:
+    name: kibana
+  elasticsearchRefs:
+    - name: elasticsearch
+  http:
+    service:
+      spec:
+        type: ClusterIP
+    tls:
+      selfSignedCertificate:
+        disabled: true
+  deployment:
+    replicas: 1
+    podTemplate:
+      spec:
+        automountServiceAccountToken: true
+        containers:
+          - name: agent
+            resources:
+              requests:
+                cpu: 250m
+                memory: 512Mi
+              limits:
+                cpu: "1"
+                memory: 1Gi

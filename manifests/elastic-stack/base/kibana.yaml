@@ -1,0 +1,36 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  name: kibana
+  namespace: observability
+  labels:
+    app.kubernetes.io/component: ui
+    app.kubernetes.io/managed-by: argocd
+spec:
+  version: 8.14.0
+  count: 1
+  elasticsearchRef:
+    name: elasticsearch
+  http:
+    service:
+      spec:
+        type: ClusterIP
+  podTemplate:
+    spec:
+      containers:
+        - name: kibana
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+  config:
+    data:
+      server.publicBaseUrl: http://kibana-kb-http.observability.svc.cluster.local:5601
+      xpack.fleet.enabled: true
+      xpack.fleet.agents.elasticsearch.hosts:
+        - https://elasticsearch-es-http.observability.svc:9200
+      xpack.fleet.agents.fleet_server.hosts:
+        - http://fleet-server-agent-http.observability.svc:8220

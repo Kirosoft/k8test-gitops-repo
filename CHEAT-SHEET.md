@@ -112,3 +112,12 @@ echo "Apps: $(kubectl get applications -n argocd --no-headers | wc -l) | Pods: $
 
 ---
 💡 **Pro Tip**: Bookmark this cheat sheet and keep it open during development!
+
+
+## argo cd password:
+kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" |
+  ForEach-Object { [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_)) }
+
+
+# scale the node pool
+az aks nodepool scale --name nodepool1 --cluster-name idp-aks-cluster --resource-group rg-idp  --node-count 0

@@ -83,6 +83,7 @@ kubectl port-forward -n dev deployment/k8test-dev 3000:3000
 - **Kubernetes Resources**: Check deployment, service, ingress status  
 - **Application Logs**: View pod logs for troubleshooting
 - **GitOps History**: Track all configuration changes
+- **Elastic Stack (dev)**: ArgoCD syncs `elastic-stack-dev` to provision Elasticsearch, Kibana, Fleet, and a Synthetics agent in the `observability` namespace. Retrieve the bootstrap password with `kubectl get secret elasticsearch-es-elastic-user -n observability -o go-template='{{ .data.elastic | base64decode }}'` and port-forward `svc/kibana-kb-http` to access the Kibana UI locally.
 
 ## 🔧 Troubleshooting
 

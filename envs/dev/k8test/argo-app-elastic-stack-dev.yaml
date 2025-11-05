@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: elastic-stack-dev
+  namespace: argocd
+  labels:
+    app.kubernetes.io/managed-by: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: observability
+  sources:
+    - repoURL: https://helm.elastic.co
+      chart: eck-operator
+      targetRevision: 2.13.0
+      helm:
+        releaseName: eck-operator
+        values: |
+          managedNamespaces:
+            - observability
+            - elastic-system
+      targetNamespace: elastic-system
+    - repoURL: https://github.com/kirosoft/k8test-gitops-repo.git
+      targetRevision: HEAD
+      path: manifests/elastic-stack/base
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - RespectNamespaces=true

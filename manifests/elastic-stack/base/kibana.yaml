@@ -27,10 +27,9 @@ spec:
               cpu: "1"
               memory: 1Gi
   config:
-    data:
-      server.publicBaseUrl: http://kibana-kb-http.observability.svc.cluster.local:5601
-      xpack.fleet.enabled: true
-      xpack.fleet.agents.elasticsearch.hosts:
-        - https://elasticsearch-es-http.observability.svc:9200
-      xpack.fleet.agents.fleet_server.hosts:
-        - http://fleet-server-agent-http.observability.svc:8220
+    server.publicBaseUrl: http://kibana-kb-http.observability.svc.cluster.local:5601
+    xpack.fleet.enabled: true
+    xpack.fleet.agents.elasticsearch.hosts:
+      - https://elasticsearch-es-http.observability.svc.cluster.local:9200
+    xpack.fleet.agents.fleet_server.hosts:
+      - http://fleet-server-agent-http.observability.svc.cluster.local:8220

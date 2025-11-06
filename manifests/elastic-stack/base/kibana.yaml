@@ -33,3 +33,32 @@ spec:
       - https://elasticsearch-es-http.observability.svc.cluster.local:9200
     xpack.fleet.agents.fleet_server.hosts:
       - http://fleet-server-agent-http.observability.svc.cluster.local:8220
+    xpack.fleet.packages:
+      - name: elastic_agent
+        version: latest
+      - name: fleet_server
+        version: latest
+      - name: synthetics
+        version: latest
+    xpack.fleet.agentPolicies:
+      - name: Fleet Server policy
+        id: fleet-server-policy
+        namespace: default
+        description: Default policy for in-cluster Fleet Server
+        monitoring_enabled:
+          - logs
+          - metrics
+        package_policies:
+          - name: fleet-server-policy
+            package:
+              name: fleet_server
+              version: latest
+      - name: Private synthetics policy
+        id: synthetics-private-policy
+        namespace: default
+        description: Private location synthetics monitors
+        package_policies:
+          - name: synthetics-private
+            package:
+              name: synthetics
+              version: latest

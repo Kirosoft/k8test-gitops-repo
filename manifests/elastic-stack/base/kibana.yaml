@@ -45,20 +45,36 @@ spec:
         id: fleet-server-policy
         namespace: default
         description: Default policy for in-cluster Fleet Server
+        is_default_fleet_server: true
         monitoring_enabled:
           - logs
           - metrics
         package_policies:
-          - name: fleet-server-policy
+          - name: fleet-server
+            id: fleet-server
+            namespace: default
             package:
               name: fleet_server
-              version: latest
+            inputs:
+              - type: fleet-server
+                enabled: true
+                vars:
+                  - name: host
+                    value: 0.0.0.0
+                  - name: port
+                    value: 8220
       - name: Private synthetics policy
         id: synthetics-private-policy
         namespace: default
         description: Private location synthetics monitors
         package_policies:
           - name: synthetics-private
+            id: synthetics-private
+            namespace: default
             package:
               name: synthetics
-              version: latest
+            inputs:
+              - type: synthetics/http
+                enabled: true
+              - type: synthetics/browser
+                enabled: true
